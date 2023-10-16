@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="internet_error">Verifique sua conexão</string>
+    <string name="message_error_generic">Erro ao processar sua solicitação. Por favor , novamente mais tarde.</string>
+    <string name="close_text">Fechar\n</string>
+    <string name="try_again_text">Tente novamente</string>
+</resources>

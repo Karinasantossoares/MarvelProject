@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="primary">#FF2800</color>
+    <color name="secondary">#FFFFFF</color>
+    <color name="gray">#8F8D8D</color>
+    <color name="grayLight">#8E8A8A</color>
+    <color name="grayWhite">#FFFFFF</color>
+    <color name="custom_cursor_color">#FFFFFF</color>
+
+
+</resources>

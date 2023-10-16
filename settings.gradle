@@ -1,0 +1,23 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "marvel"
+include ':app'
+include ':core:network'
+include ':core:commons'
+include ':core:persistence'
+include ':features:home'
+include ':features:detail'
+include ':designsystem:ui'
+include ':navigation'

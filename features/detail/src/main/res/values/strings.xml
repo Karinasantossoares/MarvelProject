@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quadrinhos">comisc_title\n</string>
+    <string name="title_commics">Quadrinhos</string>
+    <string name="description_title">Descrição</string>
+    <string name="inpect_description_body">Descrição de personagem</string>
+    <string name="title_inspect_description">Título que antecede a descrição de personagem</string>
+    <string name="comics_inspect">Titulo quadrinhos</string>
+    <string name="hint_description">Formerly known as Emil Blonsky, a spy of Soviet Yugoslavian origin working for the KGB, the Abomination gained his powers after receiving a dose of gamma radiation similar to that which transformed Bruce Banner into the incredible Hulk.</string>
+</resources>
