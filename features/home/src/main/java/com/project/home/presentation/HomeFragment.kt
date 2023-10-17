@@ -14,12 +14,11 @@ import com.project.home.databinding.FragmentHomeBinding
 import com.project.home.presentation.adapter.HomeAdapter
 import com.project.navigation.DetailNavigation
 import com.project.ui.ErrorDialog
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-internal class HomeFragment : Fragment() {
+class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val homeAdapter by lazy {
         HomeAdapter()
@@ -119,5 +118,10 @@ internal class HomeFragment : Fragment() {
         errorDialog.okGotIt = {
             errorDialog.dismiss()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.clearState()
     }
 }

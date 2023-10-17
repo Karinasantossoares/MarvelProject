@@ -4,13 +4,13 @@ import android.app.Application
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.viewModelScope
 import com.project.commons.errorutils.error.ConnectionException
-import com.project.commons.errorutils.util.BaseViewModel
-import com.project.home.domain.model.CharacterModel
+import com.project.commons.stateconfig.BaseEvent
+import com.project.commons.stateconfig.BaseViewModel
+import com.project.home.domain.model.ResultsModel
 import com.project.home.domain.usecase.HomeUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
@@ -25,9 +25,11 @@ internal class HomeViewModel(
 
     private var requestPending = false
 
+
     init {
-        getAllCharacter()
+        getAllCharacter(incrementPage = false)
     }
+
 
     internal fun getAllCharacter(incrementPage: Boolean = true, nameFilter: String? = null) =
         viewModelScope.launch {
@@ -39,17 +41,19 @@ internal class HomeViewModel(
             }
             useCase.invoke(currentPage.toString(), nameFilter)
                 .flowOn(dispatcher)
-                .onCompletion { requestPending = false }
+                .onCompletion {
+                    requestPending = false
+                    updateState { it.setLoading(false) }
+                }
                 .onStart { updateState { it.setLoading(true) } }
                 .catch { onError(it) }
-                .collectLatest {
+                .collect {
                     onSuccess(it, nameFilter)
                 }
         }
 
 
     private fun onError(exception: Throwable) {
-        updateState { it.setLoading(false) }
         when (exception) {
             is ConnectionException -> {
                 HomeAction.ShowError(
@@ -74,15 +78,14 @@ internal class HomeViewModel(
 
     }
 
-    private fun onSuccess(character: CharacterModel, nameFilter: String?) {
-        updateState { it.setLoading(false) }
+    private fun onSuccess(list: List<ResultsModel>, nameFilter: String?) {
         if (nameFilter.isNullOrEmpty()) {
-            updateState { it.setSuccess(character.data.results.toMutableList()) }
+            updateState { it.setSuccess(list.toMutableList()) }
         } else {
-            if (character.data.results.isEmpty()) {
+            if (list.isEmpty()) {
                 updateState { it.copy(emptyState = true) }
             } else {
-                updateState { it.copy(listCharacter = character.data.results.toMutableList()) }
+                updateState { it.copy(listCharacter = list.toMutableList()) }
             }
         }
     }
@@ -104,6 +107,10 @@ internal class HomeViewModel(
 
     fun navigateToDetail(id: String, url: String) {
         HomeAction.NavigateToDetail(id, url).run()
+    }
+
+    fun clearState() {
+        viewModelScope.launch {  eventLiveData.emit(BaseEvent())}
     }
 
 }

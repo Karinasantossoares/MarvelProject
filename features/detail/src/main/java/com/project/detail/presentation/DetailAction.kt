@@ -1,7 +1,7 @@
 package com.project.detail.presentation
 
 import android.graphics.drawable.Drawable
-import com.project.commons.errorutils.util.BaseEvent
+import com.project.commons.stateconfig.BaseEvent
 
 sealed class DetailAction : BaseEvent() {
     data class ShowError(

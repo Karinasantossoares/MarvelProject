@@ -5,6 +5,7 @@ import com.project.detail.di.DetailModule
 import com.project.home.di.HomeModule
 import com.project.marvel.di.NavigationModule
 import com.project.network.di.NetworkModule
+import com.project.persistence.PersistenceModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -19,8 +20,10 @@ class BaseApplication : Application() {
                 NetworkModule.networkModules(BuildConfig.BASE_URL),
                 HomeModule.homeModules(),
                 NavigationModule.module(),
-                DetailModule.detailModules()
+                DetailModule.detailModules(),
+                PersistenceModule.persistenceModule()
             )
+            allowOverride(true)
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.project.home.data
+package com.project.home.data.mapper
 
 import com.project.home.data.model.CharacterResponse
 import com.project.home.domain.model.CharacterModel

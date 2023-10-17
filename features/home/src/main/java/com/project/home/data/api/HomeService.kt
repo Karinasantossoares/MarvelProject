@@ -4,7 +4,7 @@ import com.project.home.data.model.CharacterResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-internal interface HomeService {
+interface HomeService {
 
     @GET("/v1/public/characters")
     suspend fun getAllCharacter(

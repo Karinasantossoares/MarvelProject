@@ -4,7 +4,8 @@ import android.app.Application
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.viewModelScope
 import com.project.commons.errorutils.error.ConnectionException
-import com.project.commons.errorutils.util.BaseViewModel
+import com.project.commons.stateconfig.BaseEvent
+import com.project.commons.stateconfig.BaseViewModel
 import com.project.detail.R
 import com.project.detail.domain.model.DetailModel
 import com.project.detail.domain.usecase.DetailUseCase
@@ -68,5 +69,9 @@ internal class DetailViewModel(
             }
         }
 
+    }
+
+    fun clearState() {
+        viewModelScope.launch {  eventLiveData.emit(BaseEvent())}
     }
 }

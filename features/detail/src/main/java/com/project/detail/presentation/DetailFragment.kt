@@ -77,6 +77,11 @@ class DetailFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.clearState()
+    }
+
     companion object {
         const val KEY_ARGS_ID = "ID"
         const val KEY_ARGS_PHOTO = "PHOTO"

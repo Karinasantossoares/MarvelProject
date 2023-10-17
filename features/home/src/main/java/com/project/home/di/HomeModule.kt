@@ -1,9 +1,11 @@
 package com.project.home.di
 
 import com.project.home.data.api.HomeService
-import com.project.home.data.datasource.HomeDataSource
-import com.project.home.data.datasource.HomeDataSourceImpl
-import com.project.home.data.repository.HomeRepositoryImpl
+import com.project.home.data.datasource.local.LocalDataSource
+import com.project.home.data.datasource.local.LocalDataSourceImpl
+import com.project.home.data.datasource.remote.RemoteDataSource
+import com.project.home.data.datasource.remote.RemoteDataSourceImpl
+import com.project.home.data.repository.RemoteRepositoryImpl
 import com.project.home.domain.repository.HomeRepository
 import com.project.home.domain.usecase.HomeUseCase
 import com.project.home.presentation.HomeViewModel
@@ -15,8 +17,14 @@ object HomeModule {
     fun homeModules() = module {
         factory { get<Retrofit>().create(HomeService::class.java) }
         factory { HomeUseCase(repository = get()) }
-        factory<HomeRepository> { HomeRepositoryImpl(dataSource = get()) }
-        factory<HomeDataSource> { HomeDataSourceImpl(service = get()) }
+        factory<HomeRepository> {
+            RemoteRepositoryImpl(
+                remoteDataSource = get(),
+                localDataSource = get()
+            )
+        }
+        factory<RemoteDataSource> { RemoteDataSourceImpl(service = get()) }
+        factory<LocalDataSource> { LocalDataSourceImpl(characterDao = get()) }
         viewModel {
             HomeViewModel(useCase = get(), application = get())
         }

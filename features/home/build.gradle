@@ -1,7 +1,8 @@
 plugins {
     id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
 }
+
 
 android {
     namespace 'com.project.home'
@@ -21,13 +22,24 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    testOptions {
+        packagingOptions {
+            jniLibs {
+                useLegacyPackaging = true
+            }
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
+
     viewBinding {
         enabled = true
     }
@@ -36,12 +48,33 @@ android {
 dependencies {
     implementation(project(":designsystem:ui"))
     implementation(project(":core:commons"))
+    implementation(project(":core:persistence"))
     implementation(project(":navigation"))
 
-    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.core:core-ktx:1.12.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.10.0'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation 'androidx.room:room-common:2.5.2'
+    implementation 'androidx.room:room-ktx:2.5.2'
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test-jvm:1.6.4"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1"
+
+    testImplementation "junit:junit:4.13.2"
+    testImplementation "androidx.arch.core:core-testing:2.2.0"
+    testImplementation "io.mockk:mockk-android:1.11.0"
+    testImplementation "io.mockk:mockk-agent:1.13.8"
+    testImplementation "io.mockk:mockk:1.11.0"
+    testImplementation 'app.cash.turbine:turbine:1.0.0'
+
+
+    androidTestImplementation "io.mockk:mockk-android:1.11.0"
+    androidTestImplementation "androidx.test:runner:1.5.2"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.5.1"
+    androidTestImplementation "androidx.test:core-ktx:1.5.0"
+    debugImplementation("androidx.fragment:fragment-testing:1.6.1")
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.5.1'
+    androidTestImplementation "io.insert-koin:koin-test:3.2.0"
+
+
+
 }
